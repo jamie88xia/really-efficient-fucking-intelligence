@@ -2,20 +2,21 @@ export function calculateMonthlyPayments(annualInterestRateInPct, initialPrincip
     // taken from https://www.valuepenguin.com/mortgages/mortgage-payments-calculator
     
     // todo use mortgageStartMonthAndYear to calculate remaining terms (even future todo: take extra payments)
-    let numMonthsRemaining = 0;
+    const P = initialPrinciple;
+    const I = annualInterestRateInPct / 100 / 12;
+    let N = 0;
     switch(lengthOfLoan) {
         case '30 Years':
-            numMonthsRemaining = 360;
+            N = 360;
             break;
         case '15 Years':
-            numMonthsRemaining = 180;
+            N = 180;
             break;
         default:
-            numMonthsRemaining = 360;
+            N = 360;
     }
-    const monthlyInterestRate = annualInterestRateInPct / 100 / 12;
 
-    return initialPrinciple * (monthlyInterestRate + Math.pow(1 + monthlyInterestRate, numMonthsRemaining)) / (Math.pow(1 + monthlyInterestRate, numMonthsRemaining) - 1);
+    const monthlyPAndI = P * (I * Math.pow(1 + I, N)) / (Math.pow(1 + I, N) - 1);
 
-    // todo rounding
+    return monthlyPAndI;
 }

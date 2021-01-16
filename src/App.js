@@ -1,63 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import { CalculatorInput } from './features/calculatorInput/CalculatorInput';
+import { Result } from './features/result/Result';
+import { Spinner } from 'react-bootstrap';
+import { NavBar } from './features/navbar/Navbar';
 import './App.css';
 
 function App() {
+  const [modalShow, setModalShow] = React.useState(true);
+  const [showSpinner, setShowSpinner] = React.useState(true);
+  function calculate() {
+    setModalShow(false);
+    setTimeout(function () {
+        setShowSpinner(false);
+    }, 1000);
+  }
+
   return (
     <div className="App">
-      <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-        crossorigin="anonymous"
-      />
+      <NavBar/>
       <header className="App-header">
-        <CalculatorInput /> 
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
+        <CalculatorInput show={modalShow} calculate={calculate}/> 
+        {showSpinner ? 
+          <Spinner animation="grow" /> :
+          <Result />
+        }
       </header>
     </div>
   );
